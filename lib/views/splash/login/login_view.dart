@@ -6,19 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-//import '../../controllers/auth_controller.dart';
-//import '../../routes/app_routes.dart';
+// import '../../controllers/auth_controller.dart';
+// import '../../routes/app_routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginView> createState() =>
+      _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  final usernameController =
+      TextEditingController();
+
+  final passwordController =
+      TextEditingController();
 
   final AuthController authController =
       Get.find<AuthController>();
@@ -27,11 +31,14 @@ class _LoginViewState extends State<LoginView> {
 
   bool obscurePassword = true;
 
+  // اختيار الصورة
   Future<void> pickImage() async {
     final picker = ImagePicker();
 
-    final image = await picker.pickImage(
+    final XFile? image =
+        await picker.pickImage(
       source: ImageSource.gallery,
+      imageQuality: 85,
     );
 
     if (image != null) {
@@ -41,25 +48,41 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  // تسجيل الدخول
   Future<void> login() async {
-    if (usernameController.text.trim().isEmpty ||
-        passwordController.text.trim().isEmpty) {
+    if (usernameController.text
+        .trim()
+        .isEmpty) {
       Get.snackbar(
         'تنبيه',
-        'أدخل اسم المستخدم وكلمة المرور',
+        'أدخل اسم المستخدم',
       );
 
       return;
     }
 
-    final success = await authController.login(
+    if (passwordController.text
+        .trim()
+        .isEmpty) {
+      Get.snackbar(
+        'تنبيه',
+        'أدخل كلمة المرور',
+      );
+
+      return;
+    }
+
+    final success =
+        await authController.login(
       usernameController.text.trim(),
       passwordController.text.trim(),
       selectedImage,
     );
 
     if (success) {
-      Get.offNamed(AppRoutes.home);
+      Get.offNamed(
+        AppRoutes.home,
+      );
     } else {
       Get.snackbar(
         'خطأ',
@@ -70,147 +93,271 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF2E7D3),
+    return Directionality(
+      textDirection:
+          TextDirection.rtl,
 
-      appBar: AppBar(
-        title: const Text('تسجيل الدخول'),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF68743B),
-        foregroundColor: Colors.white,
-      ),
+      child: Scaffold(
+        backgroundColor:
+            const Color(0xFFF2E7D3),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(25),
+        appBar: AppBar(
+          title: const Text(
+            'تسجيل الدخول',
+          ),
 
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
+          centerTitle: true,
 
-            GestureDetector(
-              onTap: pickImage,
+          backgroundColor:
+              const Color(0xFF68743B),
 
-              child: CircleAvatar(
-                radius: 65,
+          foregroundColor:
+              Colors.white,
+        ),
 
-                backgroundColor:
-                    const Color(0xFF68743B),
+        body: SingleChildScrollView(
+          padding:
+              const EdgeInsets.all(25),
 
-                backgroundImage:
-                    selectedImage != null
-                        ? FileImage(
-                            File(selectedImage!),
-                          )
-                        : null,
-
-                child: selectedImage == null
-                    ? const Icon(
-                        Icons.person,
-                        size: 70,
-                        color: Colors.white,
-                      )
-                    : null,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            ),
 
-            const SizedBox(height: 10),
+              // =====================
+              // صورة المستخدم
+              // =====================
+              GestureDetector(
+                onTap: pickImage,
 
-            TextButton(
-              onPressed: pickImage,
-              child: const Text(
-                'تصفح صورة المستخدم',
-              ),
-            ),
+                child: Container(
+                  width: 130,
+                  height: 130,
 
-            const SizedBox(height: 25),
+                  decoration:
+                      BoxDecoration(
+                    shape: BoxShape.circle,
 
-            TextField(
-              controller: usernameController,
+                    color:
+                        const Color(
+                      0xFF68743B,
+                    ),
 
-              decoration: InputDecoration(
-                labelText: 'اسم المستخدم',
-                prefixIcon:
-                    const Icon(Icons.person),
-
-                filled: true,
-                fillColor: Colors.white,
-
-                border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(15),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: passwordController,
-              obscureText: obscurePassword,
-
-              decoration: InputDecoration(
-                labelText: 'كلمة المرور',
-                prefixIcon:
-                    const Icon(Icons.lock),
-
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      obscurePassword =
-                          !obscurePassword;
-                    });
-                  },
-
-                  icon: Icon(
-                    obscurePassword
-                        ? Icons.visibility
-                        : Icons.visibility_off,
+                    border: Border.all(
+                      color:
+                          Colors.white,
+                      width: 4,
+                    ),
                   ),
-                ),
 
-                filled: true,
-                fillColor: Colors.white,
+                  child:
+                      selectedImage != null &&
+                              File(
+                                selectedImage!,
+                              ).existsSync()
+                          ? ClipOval(
+                              child:
+                                  Image.file(
+                                File(
+                                  selectedImage!,
+                                ),
 
-                border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(15),
+                                width: 130,
+                                height: 130,
+
+                                fit: BoxFit
+                                    .cover,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.person,
+                              size: 75,
+                              color:
+                                  Colors.white,
+                            ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 30),
+              const SizedBox(
+                height: 10,
+              ),
 
-            SizedBox(
-              width: double.infinity,
-              height: 55,
+              TextButton.icon(
+                onPressed:
+                    pickImage,
 
-              child: ElevatedButton(
-                onPressed: login,
+                icon: const Icon(
+                  Icons.photo_library,
+                ),
 
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color(0xFF68743B),
+                label: const Text(
+                  'اختيار صورة المستخدم',
+                ),
+              ),
 
-                  foregroundColor: Colors.white,
+              const SizedBox(
+                height: 25,
+              ),
 
-                  shape: RoundedRectangleBorder(
+              // =====================
+              // اسم المستخدم
+              // =====================
+              TextField(
+                controller:
+                    usernameController,
+
+                textDirection:
+                    TextDirection.rtl,
+
+                decoration:
+                    InputDecoration(
+                  labelText:
+                      'اسم المستخدم',
+
+                  prefixIcon:
+                      const Icon(
+                    Icons.person,
+                  ),
+
+                  filled: true,
+
+                  fillColor:
+                      Colors.white,
+
+                  border:
+                      OutlineInputBorder(
                     borderRadius:
-                        BorderRadius.circular(15),
-                  ),
-                ),
-
-                child: const Text(
-                  'دخول',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                        BorderRadius
+                            .circular(
+                      15,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(
+                height: 15,
+              ),
+
+              // =====================
+              // كلمة المرور
+              // =====================
+              TextField(
+                controller:
+                    passwordController,
+
+                obscureText:
+                    obscurePassword,
+
+                textDirection:
+                    TextDirection.rtl,
+
+                decoration:
+                    InputDecoration(
+                  labelText:
+                      'كلمة المرور',
+
+                  prefixIcon:
+                      const Icon(
+                    Icons.lock,
+                  ),
+
+                  suffixIcon:
+                      IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword =
+                            !obscurePassword;
+                      });
+                    },
+
+                    icon: Icon(
+                      obscurePassword
+                          ? Icons
+                              .visibility
+                          : Icons
+                              .visibility_off,
+                    ),
+                  ),
+
+                  filled: true,
+
+                  fillColor:
+                      Colors.white,
+
+                  border:
+                      OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius
+                            .circular(
+                      15,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+
+              // =====================
+              // زر الدخول
+              // =====================
+              SizedBox(
+                width:
+                    double.infinity,
+
+                height: 55,
+
+                child:
+                    ElevatedButton(
+                  onPressed: login,
+
+                  style:
+                      ElevatedButton
+                          .styleFrom(
+                    backgroundColor:
+                        const Color(
+                      0xFF68743B,
+                    ),
+
+                    foregroundColor:
+                        Colors.white,
+
+                    shape:
+                        RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius
+                              .circular(
+                        15,
+                      ),
+                    ),
+                  ),
+
+                  child: const Text(
+                    'دخول',
+
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight:
+                          FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
   }
 }

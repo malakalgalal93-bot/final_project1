@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
-
+//عمليه زمنيه عند تشغيل الشاشه
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
   @override
   State<SplashView> createState() => _SplashViewState();
 }
-
+                                                //splash screen
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-
-    Timer(
-      const Duration(seconds: 3),
+  // تيمر استخدمنا من مكتبه دارت async
+    Timer(  
+      const Duration(seconds: 3), //ينتظر 3ثواني بعدين ينتقل للصفحه الثاني
       () {
         Get.offNamed(AppRoutes.login);
       },

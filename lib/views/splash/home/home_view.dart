@@ -9,13 +9,13 @@ import 'package:final_project1/views/food/food_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/auth_controller.dart';
+// import '../../controllers/auth_controller.dart';
 
-import '../food/food_view.dart';
-import '../drinks/drinks_view.dart';
-import '../desserts/desserts_view.dart';
-import '../cart/cart_view.dart';
-import '../admin/admin_view.dart';
+// import '../food/food_view.dart';
+// import '../drinks/drinks_view.dart';
+// import '../desserts/desserts_view.dart';
+// import '../cart/cart_view.dart';
+// import '../admin/admin_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -214,9 +214,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  // ==========================================
-  // بطاقة التصنيف
-  // ==========================================
+
 
   Widget _categoryCard({
     required String image,
