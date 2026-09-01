@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'توصيل خدمات المطاعم',
 
       initialRoute: AppRoutes.splash,
-
+//ربط اسم المسار بالواجهه الفعلية
       getPages: [
         GetPage(name: AppRoutes.splash, page: () => const SplashView()),
 

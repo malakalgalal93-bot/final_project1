@@ -233,9 +233,7 @@ class _AdminViewState extends State<AdminView> {
 
                     const SizedBox(height: 15),
 
-                    // =========================
                     // صورة المنتج
-                    // =========================
                     GestureDetector(
                       onTap: pickImage,
 
