@@ -136,6 +136,7 @@ class DatabaseHelper {
           'category': 'dessert',
         });
 
+
         await db.insert('products', {
           'name': 'كيك شوكولاتة',
           'description': 'كيك شوكولاتة فاخر',
