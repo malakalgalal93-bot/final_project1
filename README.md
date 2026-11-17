@@ -67,6 +67,20 @@ Malaak Al-Galal
 
 Information Technology Student | Mobile Application Development Enthusiast
 
+## Application Screenshots
+
+### Login Screen
+![Login Screen](./Screenshot_٢٠٢٦١١١٧_٢٣٠٥١١.jpg)
+
+### Home Screen
+![Home Screen](./Screenshot_٢٠٢٦١١١٧_٢٣٠٦٢٨.jpg)
+
+### Products Management
+![Products Management](./Screenshot_٢٠٢٦١١١٧_٢٣٠٧١٠.jpg)
+
+### Shopping Cart
+![Shopping Cart](./Screenshot_٢٠٢٦١١١٧_٢٣٠٧١٧.jpg)
+
 A new Flutter project.
 
 ## Getting Started
